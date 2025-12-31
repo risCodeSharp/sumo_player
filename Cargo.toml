@@ -1,0 +1,10 @@
+[package]
+name = "music_player"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rodio = "0.21"
+eframe = "0.33"
+id3 = "1.16.3"
+image = "0.25"
