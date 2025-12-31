@@ -1,10 +1,10 @@
-use crate::components;
 use crate::services::MusicService;
-use crate::ui::MusicPathEntryUI;
+use crate::ui::{music_path_entry_ui::MusicPathEntryUI, music_buttons::MusicButtons};
 use eframe::egui::{self, TextureHandle};
 pub struct MusicPlayer {
     music_service: MusicService,
     music_path_entry_ui: MusicPathEntryUI,
+    music_button_ui: MusicButtons,
     cover_texture: Option<TextureHandle>,
 }
 
@@ -13,6 +13,7 @@ impl MusicPlayer {
         Self {
             music_path_entry_ui: MusicPathEntryUI::new(),
             music_service: MusicService::new(),
+            music_button_ui: MusicButtons::new(),
             cover_texture: None,
         }
     }
@@ -34,15 +35,15 @@ impl eframe::App for MusicPlayer {
                     self.music_service.music_file.name()
                 ));
                 ui.horizontal(|ui| {
-                    if components::play_button(ui).clicked() {
+                    if self.music_button_ui.show_play_button(ui).clicked() {
                         self.music_service.resume();
                     }
 
-                    if components::pause_button(ui).clicked() {
+                    if self.music_button_ui.show_pause_button(ui).clicked() {
                         self.music_service.pause();
                     }
                     
-                    if components::stop_button(ui).clicked() {
+                    if self.music_button_ui.show_stop_button(ui).clicked() {
                         self.music_service.stop();
                     }
                 });

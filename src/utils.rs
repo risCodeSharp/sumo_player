@@ -12,3 +12,17 @@ pub mod texture_util{
         ctx.load_texture("cover", color_image, Default::default())
     }
 }
+
+pub mod color_util {
+    use eframe::egui::Color32;
+    
+       /// Helper function to blend colors for smooth animations
+    pub fn lerp_color(start: Color32, end: Color32, t: f32) -> Color32 {
+        Color32::from_rgb(
+            (start.r() as f32 + (end.r() as f32 - start.r() as f32) * t) as u8,
+            (start.g() as f32 + (end.g() as f32 - start.g() as f32) * t) as u8,
+            (start.b() as f32 + (end.b() as f32 - start.b() as f32) * t) as u8,
+        )
+    }
+}
+
