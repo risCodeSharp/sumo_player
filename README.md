@@ -1,100 +1,64 @@
+# 🎵 Sumo Player
 
-# 🎵 Sumo Music Player
-
-A lightweight, responsive music player built with **Rust** and the **egui/eframe** framework. This player features a directory-based music library, real-time playback synchronization, and a clean, centered UI that adapts to window resizing.
-
-## ✨ Features
-
-* **Directory-Based Library**: Easily load music files by searching specific directories on your system.
-* **Persistent Controls**: Play, Pause, and Stop buttons remain accessible in a dedicated bottom panel.
-* **Real-Time Seeking**: A smooth timeline slider that updates as the song plays and allows for manual seeking (drag/click).
-* **Responsive Layout**: Perfectly centered playback controls that remain in the middle of the window even when resized.
-* **Robust ID Handling**: Implements scoped IDs (`push_id`) to prevent UI rendering collisions in lists.
+**Sumo Player** is a lightweight, high-performance music player built with **Rust** and the **egui** framework. It provides a clean, distraction-free environment for local music playback with a focus on stable UI performance and data privacy.
 
 ---
 
-## 🛠️ Technical Stack
+## ✨ Features
 
-* **Language**: [Rust](https://www.rust-lang.org/)
-* **UI Framework**: [egui](https://github.com/emilk/egui) & [eframe](https://github.com/emilk/egui/tree/master/crates/eframe)
-* **Audio Backend**: Custom `MusicService` implementation.
-* **File Handling**: `std::fs` and `std::path`.
+* 📂 **Smart Library Scanning**: Instantly map local directories to an organized, scrollable music library.
+* ⚖️ **Dynamic Centering**: Controls are mathematically anchored to the window center, ensuring a balanced look at any resolution or window size.
+* Seeking & Sync**: Real-time position tracking with a scrubbable timeline for precise song navigation.
+* 🚀 **Native Performance**: Built on the Rust safety and speed model, ensuring minimal CPU and RAM footprint during playback.
+* 🚫 **Privacy First**: Explicitly licensed to prevent unauthorized AI model training on its source code.
+
+---
+
+## 🎨 Key UI Mechanics
+
+Instead of a cluttered interface, Sumo Player uses a dual-zone architecture to maximize efficiency:
+
+### 1. The Playback Dashboard
+
+The bottom of the application features a persistent "Now Playing" bar. This zone is logically separated from the library to ensure that playback controls—Play, Pause, and Stop—are always accessible and perfectly centered, even during extreme window resizing.
+
+### 2. The Adaptive Music Library
+
+The central area houses a vertical scrolling list of your audio files. By utilizing unique ID scoping for every track, the player ensures that selecting songs is smooth and bug-free, preventing common UI "glitches" or overlapping text.
+
+### 3. Seek & Flow
+
+The timeline slider acts as both a visual progress indicator and a manual seek tool. It automatically yields priority to user input (dragging/clicking) to ensure the music never "jumps" back to the previous position while you are trying to find a specific part of a song.
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Installation
 
-Ensure you have the Rust toolchain installed:
+Clone the repository and ensure you have the latest Rust toolchain installed.
 
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+git clone https://github.com/yourusername/sumo-player.git
+cd sumo-player
 
 ```
 
-### Running the Application
+### Running the Player
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/rust-egui-music-player.git
-cd rust-egui-music-player
-
-```
-
-
-2. Build and run:
 ```bash
 cargo run --release
 
 ```
 
-
-
 ---
 
-## 🏗️ Architecture
+## 📜 License & AI Policy
 
-The application is structured into modular UI components to keep the main loop clean:
+This project is licensed under the **AI Public License (AiPL)**.
 
-| Component | Responsibility |
-| --- | --- |
-| `MusicPlayer` | Main `eframe::App` loop and panel layout management. |
-| `MusicPathEntryUI` | Handles directory searching and the scrollable library list. |
-| `MusicButtonUI` | Renders styled buttons and the playback timeline slider. |
-| `MusicService` | The backend logic for audio decoding and playback state. |
+Sumo Player is a human-authored project. To protect the integrity of the work:
 
----
-
-## 💡 Implementation Highlights
-
-### Resizable Centering Logic
-
-To achieve perfect centering during window resizes, the player utilizes `allocate_ui_with_layout` with a centered main alignment, avoiding fragile manual coordinate calculations.
-
-```rust
-ui.allocate_ui_with_layout(
-    egui::vec2(ui.available_width(), 30.0),
-    egui::Layout::left_to_right(egui::Align::Center).with_main_align(egui::Align::Center),
-    |ui| {
-        // Buttons stay centered here...
-    }
-);
-
-```
-
-### Preventing ID Collisions
-
-When rendering the music list, we use `enumerate()` and `push_id` to ensure `egui` uniquely identifies every track, even if filenames are identical.
-
-> **Note**: This prevents the "ID" text overlay often seen in debug renders of egui applications.
-
----
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-**Would you like me to add a "Roadmap" section to this README with ideas like "Playlist Support" or "Volume Normalization"?**
+* **AI Training is prohibited**: This source code may not be used as training data for LLMs or other machine learning models.
+* **Commercial Use**: Allowed, provided the AI Training restriction is respected.
+* **Redistribution**: Allowed with original license credits.
